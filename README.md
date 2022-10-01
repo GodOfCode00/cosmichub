@@ -10,17 +10,5 @@
 | ProblemDiscussion |                           |               |
 | UserDiscussion    |                           |               |
 
-### User
-GET All  `http://localhost:7000/cosmichub/user`
-
-GET Single `http://localhost:7000/cosmichub/user/:id`
-
-GET Me `http://localhost:7000/cosmichub/user/me`
-
-POST SignUp `http://localhost:7000/cosmichub/user/signup`
-
-POST SignIn `http://localhost:7000/cosmichub/user/signin`
-
-PUT Update Me `http://localhost:7000/cosmichub/user/me`
-
-DELETE Remove `http://localhost:7000/cosmichub/user/me`
+### APIs
+[See postman collection](https://documenter.getpostman.com/view/23347707/2s83tDpCS3)
