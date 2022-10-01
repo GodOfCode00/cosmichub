@@ -1,4 +1,5 @@
 import { connect, ConnectOptions } from "mongoose";
+import PlatformError from "../universe/errors/PlatformError";
 
 const options: ConnectOptions = {
   useNewUrlParser: true,
@@ -7,7 +8,7 @@ const options: ConnectOptions = {
 
 export const connection = () => {
   const { MONGOURI } = process.env;
-  if (!MONGOURI) throw new Error("Environment Var not found");
+  if (!MONGOURI) throw new PlatformError(500,["Environment Var not found"]);
   connect(MONGOURI, options)
     .then(() => console.log("dB connect successsfulllly"))
     .catch((err) => {

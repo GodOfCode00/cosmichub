@@ -34,8 +34,9 @@ export class UserService {
       },
     };
   }
-  static getMe(): IServerResponse<IUser> {
-    const result = CoreContext.get<IUser>("user");
+  static async getMe(): Promise<IServerResponse<IUser | null>> {
+    const user = CoreContext.get<IUser>("user");
+    const result = await userModel.findById<IUser>(user._id);
     return {
       status: true,
       content: {
@@ -66,7 +67,7 @@ export class UserService {
 
     const enPassword = await hash(password, 10);
 
-    const document: IUserSignUp = {
+    const document = {
       firstname,
       lastname,
       username: username === "" ? firstname + Snowflake.generate() : username,
@@ -76,8 +77,8 @@ export class UserService {
       banner_image,
       gender,
       links,
-      created_at: new Date(),
-      updated_at: new Date(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
     };
     // validation
 
@@ -90,8 +91,11 @@ export class UserService {
     };
   }
   static async signIn(data: IUserSignIn): Promise<IServerResponse<IUserView>> {
-    const { username = "", email = "", password } = data;
-    let user = await userModel.findOne<IUser>({ $or: [{ email, username }] });
+    const { username = "", password } = data;
+    let user = await userModel.findOne<IUser>({
+      $or: [{ email: username }, { username }],
+    });
+    //let user = await userModel.findOne<IUser>({ username });
     if (user && (await compare(password, user.password))) {
       let document: IUserView = {
         firstname: user.firstname,
@@ -101,9 +105,13 @@ export class UserService {
         gender: user.gender,
         links: user.links,
       };
-      const token = sign(document, process.env.TOKEN_KEY as string, {
-        expiresIn: "5h",
-      });
+      const token = sign(
+        { _id: user._id, ...document },
+        process.env.TOKEN_KEY as string,
+        {
+          expiresIn: "5h",
+        }
+      );
       let give: IServerResponse<IUserView> = {
         status: true,
         content: {
@@ -113,7 +121,7 @@ export class UserService {
       };
       return give;
     }
-    throw new Error("Invalid Credentials");
+    throw new PlatformError<string[]>(401, ["Invalid Credentials"]);
   }
   static async updateMe(data: IUserUpdate) {
     const user = CoreContext.get<IUser>("user");
@@ -122,15 +130,12 @@ export class UserService {
       lastname,
       username,
       email,
-      password,
       image,
       banner_image,
       gender,
       links,
     } = data;
-    const document: IUserUpdate = {
-      updated_at: new Date(),
-    };
+    const document: IUserUpdate = {};
     if (typeof firstname !== "undefined") {
       document.firstname = firstname;
     }
@@ -142,9 +147,6 @@ export class UserService {
     }
     if (typeof email !== "undefined") {
       document.email = email;
-    }
-    if (typeof password !== "undefined") {
-      document.password = password;
     }
     if (typeof image !== "undefined") {
       document.image = image;
@@ -158,7 +160,10 @@ export class UserService {
     if (typeof links !== "undefined") {
       document.links = links;
     }
-    const result = await userModel.updateOne({ _id: user._id }, document);
+    const result = await userModel.updateOne(
+      { _id: user._id },
+      { ...document, updated_at: new Date().toISOString() }
+    );
     return {
       status: true,
       content: {
