@@ -9,6 +9,7 @@ export interface IUser {
   password: string;
   image: Object | null;
   banner_image: Object | null;
+  dob: string | null;
   gender: string | null;
   links: string[] | null;
   created_at: Date;
@@ -17,10 +18,8 @@ export interface IUser {
 
 export interface IUserUpdate extends Partial<IUser> {};
 
-export type IUserView = Pick<
-  IUser,
-  "firstname" | "lastname" | "username" | "email" | "gender" | "links"
->;
+export type IUserView = Omit<
+  IUser,'_id'|'password'|'created_at'|'updated_at'>;
 
 export interface IUserSignUp extends IUserUpdate {
   firstname: string;

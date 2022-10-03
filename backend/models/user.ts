@@ -11,6 +11,7 @@ const userSchema = new Schema<IUser>({
   image: { type: Object },
   banner_image: { type: Object },
   gender: { type: String },
+  dob: { type: String },
   links: { type: Array<String> },
   created_at: { type: Schema.Types.Date },
   updated_at: { type: Schema.Types.Date },
