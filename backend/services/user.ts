@@ -54,6 +54,7 @@ export class UserService {
       image = null,
       banner_image = null,
       gender = null,
+      dob = null,
       links = [],
     } = data;
 
@@ -76,6 +77,7 @@ export class UserService {
       image,
       banner_image,
       gender,
+      dob,
       links,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
@@ -104,6 +106,9 @@ export class UserService {
         email: user.email,
         gender: user.gender,
         links: user.links,
+        image: null,
+        banner_image: null,
+        dob: null
       };
       const token = sign(
         { _id: user._id, ...document },
@@ -112,6 +117,9 @@ export class UserService {
           expiresIn: "5h",
         }
       );
+      document.image=user.image;
+      document.banner_image=user.banner_image;
+      document.dob=user.dob;
       let give: IServerResponse<IUserView> = {
         status: true,
         content: {
@@ -133,6 +141,7 @@ export class UserService {
       image,
       banner_image,
       gender,
+      dob,
       links,
     } = data;
     const document: IUserUpdate = {};
@@ -156,6 +165,9 @@ export class UserService {
     }
     if (typeof gender !== "undefined") {
       document.gender = gender;
+    }
+    if (typeof dob !== "undefined") {
+      document.dob = dob;
     }
     if (typeof links !== "undefined") {
       document.links = links;

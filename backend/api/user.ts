@@ -26,6 +26,7 @@ UserRouter.post('/signup',async (request:Request,response:Response)=>{
 
 UserRouter.post('/signin',async (request:Request,response:Response)=>{
     const result=await UserService.signIn(request.body);
+    response.cookie('token',result.content.token);
     response.json(result);
 });
 
