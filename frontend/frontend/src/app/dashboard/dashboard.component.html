@@ -1,0 +1,128 @@
+<nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Dashboard</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" >Home <span class="sr-only"></span></a>
+      </li>
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li> -->
+      <!-- <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li> -->
+    </ul>
+    <form class="form-inline my-2 my-lg-0" style="    display: flex;">
+      <input class="form-control mr-sm-2" type="search"  placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0"  style="width: 6em;letter-spacing:0.001px; margin:0.001px" type="submit">Search</button>
+    </form>
+  </div>
+  <button class="btn btn-outline-danger my-2 my-sm-0" style="width: 6em;letter-spacing:0.001px; margin:0.001px" (click)="logout()" >logout</button>
+</nav>
+
+
+<!-- user cards -->
+<div class="container">
+  <div class="card"  style="height: 29em;" *ngFor="let user of alluser | paginate: { itemsPerPage: 1, currentPage: page } ">
+    <img src="https://lh3.googleusercontent.com/ytP9VP86DItizVX2YNA-xTYzV09IS7rh4WexVp7eilIcfHmm74B7odbcwD5DTXmL0PF42i2wnRKSFPBHlmSjCblWHDCD2oD1oaM1CGFcSd48VBKJfsCi4bS170PKxGwji8CPmehwPw=w200-h247-no" alt="Person" class="card__image">
+    <p class="card__name">{{user.firstname}}   {{user.lastname}}</p>
+    <div class="grid-container" style="display: flex;">
+
+
+      <div class="grid-child-followers">
+       email: {{user.email}}
+      </div>
+
+    </div>
+    <ul class="social-icons">
+      <button class="btn draw-border" (click)="open(content)">Edit</button>
+    <button class="btn draw-border">Delete</button>
+
+    </ul>
+    <ng-template #content let-modal  >
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-outline">
+              <label class="form-label" for="lastName">Username</label>
+            <input type="text" id="lastName" name="username" [(ngModel)]="user.username" class="form-control form-control-lg" />
+          </div>
+          <!-- <div class="form-outline">
+            <label class="form-label" for="lastName">First Name</label>
+            <input type="text" id="lastName" name="firstname" [(ngModel)]="user.firstname" class="form-control form-control-lg" />
+            <label class="form-label" for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastname" [(ngModel)]="user.lastname" class="form-control form-control-lg" />
+
+        </div> -->
+        <div class="row">
+          <div class="col-md-6 mb-4">
+
+            <div class="form-outline">
+              <label class="form-label" for="firstName" >First Name</label>
+              <input [(ngModel)]="user.firstname" name="firstname"  type="text" id="firstName" class="form-control form-control-lg" />
+
+            </div>
+
+          </div>
+          <div class="col-md-6 mb-4">
+
+            <div class="form-outline">
+              <label class="form-label" for="lastName">Last Name</label>
+              <input type="text" id="lastName" name="lastname"  class="form-control form-control-lg" [(ngModel)]="user.lastname" />
+
+            </div>
+
+          </div>
+        </div>
+
+
+        <!-- end -->
+        <label for="gender"> Select you gender</label>
+        <select name="gender"[(ngModel)]="user.gender">
+          <option value="none" selected>Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">other</option>
+        </select>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" (click)="update(user)">Save</button>
+      </div>
+    </ng-template>
+
+  </div>
+
+
+
+</div>
+
+<!-- modal -->
+
+
+
+
+<hr>
+
+
+<pagination-controls (pageChange)="page = $event" style="    padding-left: 38%;
+position: absolute;"></pagination-controls>
