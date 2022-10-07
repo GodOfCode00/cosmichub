@@ -19,7 +19,7 @@ export interface IUser {
 export interface IUserUpdate extends Partial<IUser> {};
 
 export type IUserView = Omit<
-  IUser,'_id'|'password'|'created_at'|'updated_at'>;
+  IUser,'password'|'created_at'|'updated_at'>;
 
 export interface IUserSignUp extends IUserUpdate {
   firstname: string;

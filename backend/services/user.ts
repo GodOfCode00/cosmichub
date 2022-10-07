@@ -92,14 +92,14 @@ export class UserService {
       },
     };
   }
-  static async signIn(data: IUserSignIn): Promise<IServerResponse<IUserView>> {
+  static async signIn(data: IUserSignIn): Promise<IServerResponse<IUserUpdate>> {
     const { username = "", password } = data;
     let user = await userModel.findOne<IUser>({
       $or: [{ email: username }, { username }],
     });
     //let user = await userModel.findOne<IUser>({ username });
     if (user && (await compare(password, user.password))) {
-      let document: IUserView = {
+      let document:IUserUpdate = {
         firstname: user.firstname,
         lastname: user.lastname,
         username: user.username,
@@ -120,7 +120,7 @@ export class UserService {
       document.image=user.image;
       document.banner_image=user.banner_image;
       document.dob=user.dob;
-      let give: IServerResponse<IUserView> = {
+      let give: IServerResponse<IUserUpdate> = {
         status: true,
         content: {
           data: document,
