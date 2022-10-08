@@ -5,6 +5,7 @@ import cors from 'cors';
 import UserRouter from './api/user';
 import { connection } from './config/database';
 import ErrorHandler from "./middleware/error-handler";
+import ProblemRouter from "./api/problem";
 
 const app = express();
 connection();
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.static('public'));
 
 app.use('/cosmichub/user',UserRouter);
+app.use('/cosmichub/problem',ProblemRouter);
 
 app.all('*',(request: express.Request,response: express.Response)=> {
     response.send('Cosmic Hub');

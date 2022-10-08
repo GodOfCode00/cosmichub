@@ -1,7 +1,5 @@
 import { CoreContext } from "@theinternetfolks/context";
-import { Snowflake } from "@theinternetfolks/snowflake";
-import { compare, hash } from "bcrypt";
-import { sign } from "jsonwebtoken";
+import { ObjectId } from "mongoose";
 import {
   IProblemUpdate,
   IProblem,
@@ -9,8 +7,9 @@ import {
 } from "../interfaces/problem";
 import { IUser } from "../interfaces/user";
 import { problemModel } from "../models/problem";
-import PlatformError from "../universe/errors/PlatformError";
 import { IServerResponse } from "../universe/interfaces/common";
+import { ProblemTagService } from "./problem_tag";
+import { TagService } from "./tag";
 
 export class ProblemService {
   static async getAll<IProblem>(): Promise<IServerResponse<IProblem[]>> {
@@ -35,7 +34,7 @@ export class ProblemService {
   }
   static async getMyProblems(): Promise<IServerResponse<IProblem[]>> {
     const me = CoreContext.get<IUser>("user");
-    const result = await problemModel.find<IProblem>({user:me._id});
+    const result = await problemModel.find<IProblem>({ user: me._id });
     return {
       status: true,
       content: {
@@ -44,11 +43,13 @@ export class ProblemService {
     };
   }
 
-  static async createMyproblem(data: IProblem): Promise<IServerResponse<IProblem | null>>  {
+  static async createMyproblem(
+    data: IProblemCreate
+  ): Promise<IServerResponse<IProblem | null>> {
     const me = CoreContext.get<IUser>("user");
-    const {title,body,description,images} = data;
-    const document: IProblemCreate = {
-      user:me._id,
+    const { title, body, description = null, images = [], tags = [] } = data;
+    const document: IProblem = {
+      user: me._id,
       title,
       body,
       description,
@@ -57,6 +58,27 @@ export class ProblemService {
       updated_at: new Date(),
     };
     const result = await problemModel.create<IProblemCreate>(document);
+
+    if (tags.length > 0) {
+      for (let tag of tags) {
+        let {
+          content: { data },
+        } = await TagService.isTagExist({ name: tag });
+        if (data) {
+          ProblemTagService.createProblemTag({
+            problem: result._id,
+            tag: data._id as ObjectId,
+          });
+        }
+        else {
+          let {content:{data}}= await TagService.createTag({name:tag});
+          ProblemTagService.createProblemTag({
+            problem: result._id,
+            tag: data?._id as ObjectId,
+          });
+        }
+      }
+    }
     return {
       status: true,
       content: {
@@ -64,26 +86,53 @@ export class ProblemService {
       },
     };
   }
-  
+
   static async updateMyproblem(data: IProblemUpdate) {
     const me = CoreContext.get<IUser>("user");
-    const {title,body,description,images} = data;
+    const { title, body, description, images, tags } = data;
     const document: IProblemUpdate = {
-      updated_at: new Date()
+      updated_at: new Date(),
     };
-    if(typeof title !== 'undefined') {
+    if (typeof title !== "undefined") {
       document.title = title;
     }
-    if(typeof body !== 'undefined') {
+    if (typeof body !== "undefined") {
       document.body = body;
     }
-    if(typeof description !== 'undefined') {
+    if (typeof description !== "undefined") {
       document.description = description;
     }
-    if(typeof images !== 'undefined') {
+    if (typeof images !== "undefined") {
       document.images = images;
     }
-    const result = await problemModel.updateOne<IProblemUpdate>({user:me._id},document);
+    const result = await problemModel.updateOne<IProblemUpdate>(
+      { user: me._id },
+      document
+    );
+    const problem = await problemModel.findOne({user:me._id});
+    if (tags && tags.length > 0) {
+      if(problem?._id) {
+        let wait = await ProblemTagService.removeProblemTag(problem?._id);
+        for (let tag of tags) {
+          let {
+            content: { data },
+          } = await TagService.isTagExist({ name: tag });
+          if (data) {
+            ProblemTagService.createProblemTag({
+              problem: problem._id,
+              tag: data._id as ObjectId,
+            });
+          }
+          else {
+            let {content:{data}}= await TagService.createTag({name:tag});
+            ProblemTagService.createProblemTag({
+              problem: problem._id,
+              tag: data?._id as ObjectId,
+            });
+          }
+        }
+      }
+    }
     return {
       status: true,
       content: {
@@ -93,7 +142,7 @@ export class ProblemService {
   }
   static async removeMyProblem() {
     const me = CoreContext.get<IUser>("user");
-    const result = await problemModel.remove({user:me._id});
+    const result = await problemModel.remove({ user: me._id });
     return {
       status: true,
       content: {
@@ -101,5 +150,4 @@ export class ProblemService {
       },
     };
   }
-
 }

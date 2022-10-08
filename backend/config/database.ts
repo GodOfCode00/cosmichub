@@ -20,4 +20,6 @@ export const connection = () => {
 export const database = {
   user: "user",
   problem: "problem",
+  tag: "tag",
+  problem_tag: "problem_tag"
 };
