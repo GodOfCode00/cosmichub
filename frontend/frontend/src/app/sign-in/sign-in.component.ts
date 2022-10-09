@@ -14,13 +14,18 @@ export class SignInComponent implements OnInit {
   validUser!:Login
 
   ngOnInit(): void {
+    if(localStorage.getItem("token")){
+      this.router.navigate(['/dashboard']);
+    }
     this.validUser=new Login();
     this.getll();
 
   }
   login(validUser:Login){
     this.service.login(validUser).subscribe((res:any)=>{
+      localStorage.setItem("token",res.content.token);
       console.log(res.content.token);
+
       this.router.navigate(['/dashboard']);
     })
 

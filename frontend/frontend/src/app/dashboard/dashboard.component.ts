@@ -3,6 +3,9 @@ import { ApiServiceService } from '../services/api-service.service';
 import { user } from '../model/user';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { IfStmt } from '@angular/compiler';
+
 
 
 @Component({
@@ -16,8 +19,10 @@ export class DashboardComponent implements OnInit {
   constructor(private service:ApiServiceService,private modalService: NgbModal,private route:Router) { }
    alluser:user[]=[];
    totalLength:any;
+   deleteclicked:boolean=false;
   page:number=1;
   ngOnInit(): void {
+
   this.getuser();
   }
   open(content:any) {
@@ -55,7 +60,19 @@ export class DashboardComponent implements OnInit {
  })
   }
   logout(){
+    localStorage.removeItem("token");
 this.route.navigate(['/login']);
+  }
+  delete(){
+   this.deleteclicked=true;
+
+
+  }
+  confirmdelete(){
+this.deleteclicked=false;
+this.service.delete().subscribe((res:any)=>{
+  console.log(res+"  "+"user deleted");
+})
   }
 
 }
