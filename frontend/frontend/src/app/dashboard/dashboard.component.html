@@ -38,8 +38,8 @@
 
 <!-- user cards -->
 <div class="container">
-  <div class="card"  style="height: 29em;" *ngFor="let user of alluser | paginate: { itemsPerPage: 1, currentPage: page } ">
-    <img src="https://lh3.googleusercontent.com/ytP9VP86DItizVX2YNA-xTYzV09IS7rh4WexVp7eilIcfHmm74B7odbcwD5DTXmL0PF42i2wnRKSFPBHlmSjCblWHDCD2oD1oaM1CGFcSd48VBKJfsCi4bS170PKxGwji8CPmehwPw=w200-h247-no" alt="Person" class="card__image">
+  <div class="card"  style="height: 29em;" *ngFor="let user of alluser | paginate: { itemsPerPage: 3, currentPage: page } ">
+     <img src="https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg" alt="Person" class="card__image">
     <p class="card__name">{{user.firstname}}   {{user.lastname}}</p>
     <div class="grid-container" style="display: flex;">
 
@@ -51,7 +51,7 @@
     </div>
     <ul class="social-icons">
       <button class="btn draw-border" (click)="open(content)">Edit</button>
-    <button class="btn draw-border">Delete</button>
+    <button class="btn draw-border" (click)="delete()">Delete</button>
 
     </ul>
     <ng-template #content let-modal  >
@@ -110,7 +110,17 @@
       </div>
     </ng-template>
 
+    <div  style="position: absolute;
+    color: black;
+    background-color: blue;
+    border-radius: 5px;" *ngIf="deleteclicked">
+      <h3>Do you want to delete {{  user.firstname}}</h3>
+      <button (click)="confirmdelete()">yes</button>
+      <button>No</button>
+    </div>
+
   </div>
+
 
 
 
@@ -122,6 +132,7 @@
 
 
 <hr>
+
 
 
 <pagination-controls (pageChange)="page = $event" style="    padding-left: 38%;

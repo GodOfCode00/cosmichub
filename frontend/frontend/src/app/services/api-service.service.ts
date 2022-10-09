@@ -12,6 +12,9 @@ export class ApiServiceService {
   token!:any;
   constructor(private http:HttpClient){}
 
+  isLogedIn(){
+    return !!localStorage.getItem("token");
+  }
   signup(prana:user){
     console.log("prana");
     let url=`http://localhost:7000/cosmichub/user/signup`
@@ -25,18 +28,24 @@ export class ApiServiceService {
   login(login:Login){
     let url=`http://localhost:7000/cosmichub/user/signin`;
     this.http.post(url,login).subscribe((res:any)=>{
-      this.token=res.content.token;
-      console.log(this.token);
+      this.token='x-access-token:'+res.content.token;
+
     })
     return this.http.post(url,login);
 
   }
   update(updateuser:any){
+    console.log(this.token);
+
+    return this.http.put(
+      'http://localhost:7000/cosmichub/user/me',
+     updateuser,{headers: this.token}
+  );
+  }
+  delete(){
+    console.log(this.token)
     let url=`http://localhost:7000/cosmichub/user/me`;
-
-    const headers = new HttpHeaders({ 'Authorization':'barrier'+ this.token})
-
-    return this.http.put(url,updateuser, {headers });
+    return this.http.delete(url,{headers:this.token});
   }
 
 }
