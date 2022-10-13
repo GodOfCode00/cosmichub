@@ -1,12 +1,5 @@
 import { Schema } from "mongoose";
-/**
- * id: ObjectId,
-     user: ObjectId,
-     title: string,
-     body: string,
-     description: string | null,
-     images: Object[]
- */
+
 export interface IProblem {
   _id?: Schema.Types.ObjectId;
   user: Schema.Types.ObjectId;
