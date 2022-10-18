@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/app/environments/environment';
 import { Login } from '../model/login';
 import { user } from '../model/user';
 
@@ -46,6 +46,10 @@ export class ApiServiceService {
     console.log(this.token)
     let url=`http://localhost:7000/cosmichub/user/me`;
     return this.http.delete(url,{headers:this.token});
+  }
+  getMe(){
+    let url=`http://localhost:7000/cosmichub/user/me`;
+    return  this.http.get(url,{headers:this.token})
   }
 
 }

@@ -17,8 +17,11 @@ export class SignUpComponent implements OnInit {
 signupUser!:user;
 confirmPassword!:string
   ngOnInit(): void {
+
   this.signupUser=new user();
   this.confirmPassword=this.confirmPassword;
+  if(localStorage.getItem("token")){
+    this.route.navigate(['/dashboard']);}
 
 
   }
