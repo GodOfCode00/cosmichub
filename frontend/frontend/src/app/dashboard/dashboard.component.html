@@ -1,139 +1,218 @@
-<nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Dashboard</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <nav class="navbar navbar-expand-lg  navbar-dark bg-dark" style="height: 64px;">
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" >Home <span class="sr-only"></span></a>
-      </li>
-      <!-- <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li> -->
-      <!-- <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-      </li> -->
-    </ul>
-    <form class="form-inline my-2 my-lg-0" style="    display: flex;">
-      <input class="form-control mr-sm-2" type="search"  placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0"  style="width: 6em;letter-spacing:0.001px; margin:0.001px" type="submit">Search</button>
-    </form>
-  </div>
-  <button class="btn btn-outline-danger my-2 my-sm-0" style="width: 6em;letter-spacing:0.001px; margin:0.001px" (click)="logout()" >logout</button>
-</nav>
+      <a class="navbar-brand" *ngIf="show">Dashboard</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-
-<!-- user cards -->
-<div class="container">
-  <div class="card"  style="height: 29em;" *ngFor="let user of alluser | paginate: { itemsPerPage: 3, currentPage: page } ">
-     <img src="https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg" alt="Person" class="card__image">
-    <p class="card__name">{{user.firstname}}   {{user.lastname}}</p>
-    <div class="grid-container" style="display: flex;">
-
-
-      <div class="grid-child-followers">
-       email: {{user.email}}
-      </div>
-
-    </div>
-    <ul class="social-icons">
-      <button class="btn draw-border" (click)="open(content)">Edit</button>
-    <button class="btn draw-border" (click)="delete()">Delete</button>
-
-    </ul>
-    <ng-template #content let-modal  >
-      <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-outline">
-              <label class="form-label" for="lastName">Username</label>
-            <input type="text" id="lastName" name="username" [(ngModel)]="user.username" class="form-control form-control-lg" />
-          </div>
-          <!-- <div class="form-outline">
-            <label class="form-label" for="lastName">First Name</label>
-            <input type="text" id="lastName" name="firstname" [(ngModel)]="user.firstname" class="form-control form-control-lg" />
-            <label class="form-label" for="lastName">Last Name</label>
-            <input type="text" id="lastName" name="lastname" [(ngModel)]="user.lastname" class="form-control form-control-lg" />
-
-        </div> -->
-        <div class="row">
-          <div class="col-md-6 mb-4">
-
-            <div class="form-outline">
-              <label class="form-label" for="firstName" >First Name</label>
-              <input [(ngModel)]="user.firstname" name="firstname"  type="text" id="firstName" class="form-control form-control-lg" />
-
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" (click)="toogle()"><svg stroke="currentColor" fill="currentColor" stroke-width="0"
+                viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                  <path fill="none" d="M0 0h24v24H0z"></path>
+                  <path
+                    d="M13 21V11h8v10h-8zM3 13V3h8v10H3zm6-2V5H5v6h4zM3 21v-6h8v6H3zm2-2h4v-2H5v2zm10 0h4v-6h-4v6zM13 3h8v6h-8V3zm2 2v2h4V5h-4z">
+                  </path>
+                </g>
+              </svg><span class="sr-only"></span></a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link"  >Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"   id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item"  >Action</a>
+              <a class="dropdown-item"  >Another action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item"  >Something else here</a>
             </div>
-
-          </div>
-          <div class="col-md-6 mb-4">
-
-            <div class="form-outline">
-              <label class="form-label" for="lastName">Last Name</label>
-              <input type="text" id="lastName" name="lastname"  class="form-control form-control-lg" [(ngModel)]="user.lastname" />
-
-            </div>
-
-          </div>
-        </div>
-
-
-        <!-- end -->
-        <label for="gender"> Select you gender</label>
-        <select name="gender"[(ngModel)]="user.gender">
-          <option value="none" selected>Gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="other">other</option>
-        </select>
-
+          </li> -->
+          <!-- <li class="nav-item">
+            <a class="nav-link disabled"  >Disabled</a>
+          </li> -->
+        </ul>
+        <form class="form-inline my-2 my-lg-0" style="    display: flex;">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" style="width: 6em;letter-spacing:0.001px; margin:0.001px"
+            type="submit">Search</button>
         </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" (click)="update(user)">Save</button>
-      </div>
-    </ng-template>
+      <button class="btn btn-outline-danger my-2 my-sm-0" style="width: 6em;letter-spacing:0.001px; margin:0.001px"
+        (click)="logout()">logout</button>
+    </nav>
 
-    <div  style="position: absolute;
-    color: black;
-    background-color: blue;
-    border-radius: 5px;" *ngIf="deleteclicked">
-      <h3>Do you want to delete {{  user.firstname}}</h3>
-      <button (click)="confirmdelete()">yes</button>
-      <button>No</button>
+    <!-- slide bar -->
+
+    <!-- user cards -->
+    <div class="container" >
+
+      <div class="card" style="height: 29em;"
+        *ngFor="let user of alluser | paginate: { itemsPerPage: 3, currentPage: page } ">
+        <img src="https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg" alt="Person"
+          class="card__image">
+        <p class="card__name">{{user.firstname}} {{user.lastname}}</p>
+        <div class="grid-container" style="display: flex;">
+
+
+          <div class="grid-child-followers">
+            email: {{user.email}}
+          </div>
+
+        </div>
+        <ul class="social-icons">
+          <button class="btn draw-border" (click)="open(content)">Edit</button>
+          <button class="btn draw-border" (click)="delete()">Delete</button>
+
+        </ul>
+        <ng-template #content let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-outline">
+                <label class="form-label" for="lastName">Username</label>
+                <input type="text" id="lastName" name="username" [(ngModel)]="user.username"
+                  class="form-control form-control-lg" />
+              </div>
+              <!-- <div class="form-outline">
+                <label class="form-label" for="lastName">First Name</label>
+                <input type="text" id="lastName" name="firstname" [(ngModel)]="user.firstname" class="form-control form-control-lg" />
+                <label class="form-label" for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastname" [(ngModel)]="user.lastname" class="form-control form-control-lg" />
+
+            </div> -->
+              <div class="row">
+                <div class="col-md-6 mb-4">
+
+                  <div class="form-outline">
+                    <label class="form-label" for="firstName">First Name</label>
+                    <input [(ngModel)]="user.firstname" name="firstname" type="text" id="firstName"
+                      class="form-control form-control-lg" />
+
+                  </div>
+
+                </div>
+                <div class="col-md-6 mb-4">
+
+                  <div class="form-outline">
+                    <label class="form-label" for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastname" class="form-control form-control-lg"
+                      [(ngModel)]="user.lastname" />
+
+                  </div>
+
+                </div>
+              </div>
+
+
+              <!-- end -->
+              <label for="gender"> Select you gender</label>
+              <select name="gender" [(ngModel)]="user.gender">
+                <option value="none" selected>Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">other</option>
+              </select>
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')"
+              (click)="update(user)">Save</button>
+          </div>
+        </ng-template>
+
+        <div style="position: absolute;
+        color: black;
+        background-color: blue;
+        border-radius: 5px;" *ngIf="deleteclicked">
+          <h3>Do you want to delete {{ user.firstname}}</h3>
+          <button (click)="confirmdelete()">yes</button>
+          <button>No</button>
+        </div>
+
+      </div>
+
+
+
+
     </div>
 
+    <!-- modal -->
+
+
+
+
+    <hr>
+    <div *ngIf="show" class="sideNav" style="
+    width: 6.5%;
+    height: 100%;
+    position: absolute;
+    top: 67px;">
+
+      <div class="homeIcon">
+        <lord-icon
+        src="https://cdn.lordicon.com/gmzxduhd.json"
+        trigger="hover"
+        colors="primary:#30e849,secondary:#ffffff"
+        stroke="100"
+       >
+    </lord-icon>
+        <div class="img-h-w" (click)=" getMe()">
+          <!-- <img src="../../assets/63-home-gradient.gif" alt=""> -->
+          <lord-icon
+          src="https://cdn.lordicon.com/bhfjfgqz.json"
+          trigger="hover"
+          colors="primary:#30e849,secondary:#ffffff"
+          >
+      </lord-icon>
+        </div>
+
+      </div>
+      <div class="search">
+        <lord-icon
+    src="https://cdn.lordicon.com/msoeawqm.json"
+    trigger="hover"
+    colors="primary:#30e849,secondary:#ffffff"
+    style="width: 5.3em;
+    height:2.5em;"
+     stroke="100"
+   >
+</lord-icon>
+      </div>
+      <div class="buttom"(click)="logout()" style="position: absolute;
+        bottom: 6px;">
+        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 13L16 11 7 11 7 8 2 12 7 16 7 13z"></path>
+          <path
+            d="M20,3h-9C9.897,3,9,3.897,9,5v4h2V5h9v14h-9v-4H9v4c0,1.103,0.897,2,2,2h9c1.103,0,2-0.897,2-2V5C22,3.897,21.103,3,20,3z">
+          </path>
+        </svg>
+      </div>
+      <input type="file" (change)="oninputfile($event)">
+
+
+    </div>
+
+
+
+    <pagination-controls (pageChange)="page = $event" style="    padding-left: 38%;
+    position: absolute;"></pagination-controls>
+
   </div>
-
-
-
-
 </div>
-
-<!-- modal -->
-
-
-
-
-<hr>
-
-
-
-<pagination-controls (pageChange)="page = $event" style="    padding-left: 38%;
-position: absolute;"></pagination-controls>
+<lord-icon
+  trigger="loop"
+  src="https://cdn.lordicon.com/lupuorrc.json"
+></lord-icon>

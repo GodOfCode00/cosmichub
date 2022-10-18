@@ -218,6 +218,11 @@
     "semver" "^7.3.5"
     "tar" "^6.1.11"
 
+"@popperjs/core@^2.11.6":
+  "integrity" "sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw=="
+  "resolved" "https://registry.npmjs.org/@popperjs/core/-/core-2.11.6.tgz"
+  "version" "2.11.6"
+
 "@theinternetfolks/context@^1.1.0":
   "integrity" "sha512-PaajgWXM1cgVVgKzygf6pS9VhTZHtOEf2vJCRSqwuI3QCGra6rY5UZFMmFa7K4piiywvZ81rUqdAXFvfz3n3Fw=="
   "resolved" "https://registry.npmjs.org/@theinternetfolks/context/-/context-1.1.0.tgz"
@@ -530,6 +535,11 @@
     "raw-body" "2.5.1"
     "type-is" "~1.6.18"
     "unpipe" "1.0.0"
+
+"bootstrap@^5.2.2":
+  "integrity" "sha512-dEtzMTV71n6Fhmbg4fYJzQsw1N29hJKO1js5ackCgIpDcGid2ETMGC6zwSYw09v05Y+oRdQ9loC54zB1La3hHQ=="
+  "resolved" "https://registry.npmjs.org/bootstrap/-/bootstrap-5.2.2.tgz"
+  "version" "5.2.2"
 
 "brace-expansion@^1.1.7":
   "integrity" "sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA=="
@@ -1729,6 +1739,16 @@
   "integrity" "sha512-Ajzxb8CM6WAnFjgiloPsI3bF+WCxcvhdIG3KNA2KN962+tdBsHcuQ4k4qX/EcS/2CRkcc0iAkR956Nib6aXU/Q=="
   "resolved" "https://registry.npmjs.org/longest/-/longest-2.0.1.tgz"
   "version" "2.0.1"
+
+"lord-icon-element@^3.4.4":
+  "integrity" "sha512-bqnqhKryO4XCWEx5UPxcSgLs/RiElBx2gWO18Fn1FJFaQjDUQgGBv7pX2G3JGXwXFrfkrQza6XVQ4QhX2jrqRA=="
+  "resolved" "https://registry.npmjs.org/lord-icon-element/-/lord-icon-element-3.4.4.tgz"
+  "version" "3.4.4"
+
+"lottie-web@^5.9.6":
+  "integrity" "sha512-JFs7KsHwflugH5qIXBpB4905yC1Sub2MZWtl/elvO/QC6qj1ApqbUZJyjzJseJUtVpgiDaXQLjBlIJGS7UUUXA=="
+  "resolved" "https://registry.npmjs.org/lottie-web/-/lottie-web-5.9.6.tgz"
+  "version" "5.9.6"
 
 "lru-cache@^6.0.0":
   "integrity" "sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA=="
