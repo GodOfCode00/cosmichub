@@ -5,4 +5,5 @@ export class user{
   password!:string;
   username!:string;
   gender!:string;
+  HTMLImageElement = new Image();
 }
