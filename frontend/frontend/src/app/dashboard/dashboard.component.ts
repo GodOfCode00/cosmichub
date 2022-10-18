@@ -5,6 +5,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IfStmt } from '@angular/compiler';
+import { main } from '@popperjs/core';
 
 
 
@@ -19,6 +20,7 @@ export class DashboardComponent implements OnInit {
   constructor(private service:ApiServiceService,private modalService: NgbModal,private route:Router) { }
    alluser:user[]=[];
    totalLength:any;
+   show:boolean=false;
    deleteclicked:boolean=false;
   page:number=1;
   ngOnInit(): void {
@@ -44,8 +46,6 @@ export class DashboardComponent implements OnInit {
   }
   getuser(){
     this.service.getall().subscribe((res:any)=>{
-
-
       console.log(res);
        this.alluser=res.content.data;
        console.log(this.alluser);
@@ -53,15 +53,15 @@ export class DashboardComponent implements OnInit {
     })
   }
   update(received:user){
- console.log(received);
- this.service.update(received).subscribe((res:any)=>{
-  console.log(res);
-  console.log("updated")
- })
-  }
+      console.log(received);
+      this.service.update(received).subscribe((res:any)=>{
+      console.log(res);
+      console.log("updated")
+      })
+   }
   logout(){
     localStorage.removeItem("token");
-this.route.navigate(['/login']);
+    this.route.navigate(['/login']);
   }
   delete(){
    this.deleteclicked=true;
@@ -69,10 +69,25 @@ this.route.navigate(['/login']);
 
   }
   confirmdelete(){
-this.deleteclicked=false;
-this.service.delete().subscribe((res:any)=>{
-  console.log(res+"  "+"user deleted");
+   this.deleteclicked=false;
+   this.service.delete().subscribe((res:any)=>{
+   this.getuser();
+
 })
   }
+  toogle(){
+    this.show=!this.show;
+    console.log("Toogle called")
+  }
+  getMe(){
+   this.service.getMe().subscribe((res:any)=>{
+    console.log(res.content.data);
+   })
+  }
+  oninputfile(event:any){
+    console.log(event)
+
+  }
+
 
 }

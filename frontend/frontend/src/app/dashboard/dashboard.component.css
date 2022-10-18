@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@400;500&display=swap");
 
+/* nav css */
+
+
+
+/* navcss */
 .container {
   display: grid;
   grid-template-columns: 300px 300px 300px;
@@ -167,4 +172,22 @@
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
   font-size: 1.2em;
+}
+
+.sideNav{
+  background: #55d7dc;
+  border-radius: 0.5em;
+  margin: -4px;
+  background-color: #212529;
+}
+svg,lord-icon{
+  width: 5em;
+  height: 2em;
+  color: rgb(139, 207, 36);
+  margin-bottom: 17px;
+  margin-top: 28px;
+}
+.img-h-w img{
+  height: 10vh;
+  margin: 0px 16px;
 }
